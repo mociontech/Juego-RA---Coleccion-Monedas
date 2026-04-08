@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Lemonjoy AR Game</title>
+    <meta
+      name="apple-itunes-app"
+      content="app-id=6470517360, app-argument=https://player.onirix.com/exp/eBYBO9"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="ar-shell">
+      <iframe
+        id="visor"
+        title="Onirix Experience"
+        allow="camera; accelerometer; gyroscope; magnetometer; xr-spatial-tracking"
+      ></iframe>
+    </div>
+
+    <div id="game-ui">
+      <div id="registerScreen" class="fullscreen-screen image-screen-shell">
+        <div class="image-screen register-artboard">
+          <img
+            class="screen-art"
+            src="/Images/Pantalla_Inicio.png"
+            alt="Pantalla de inicio"
+          />
+
+          <div class="field-shell first-name-shell">
+            <img src="/Images/Nombre.png" alt="" aria-hidden="true" />
+            <input
+              id="firstNameInput"
+              class="image-input"
+              type="text"
+              inputmode="text"
+              autocomplete="given-name"
+              placeholder="Nombre"
+            />
+          </div>
+
+          <div class="field-shell last-name-shell">
+            <img src="/Images/Apellido.png" alt="" aria-hidden="true" />
+            <input
+              id="lastNameInput"
+              class="image-input"
+              type="text"
+              inputmode="text"
+              autocomplete="family-name"
+              placeholder="Apellido"
+            />
+          </div>
+
+          <button id="registerBtn" class="image-button register-image-button" type="button">
+            <img src="/Images/Registrarme.png" alt="Registrarme" />
+          </button>
+
+          <p id="registerError" class="status register-status hidden">
+            Por favor ingresa tu nombre y apellido.
+          </p>
+          <p id="configStatus" class="status register-status hidden"></p>
+        </div>
+      </div>
+
+      <div id="instructionsScreen" class="fullscreen-screen hidden image-screen-shell">
+        <div class="image-screen instructions-artboard">
+          <div id="instructionsCarousel" class="instructions-carousel" aria-label="Instrucciones">
+            <div id="instructionsTrack" class="instructions-track">
+              <div class="instructions-slide">
+                <img
+                  class="instructions-art"
+                  src="/Images/Instrucciones_1.png"
+                  alt="Instrucciones 1"
+                />
+              </div>
+              <div class="instructions-slide">
+                <img
+                  class="instructions-art"
+                  src="/Images/Instrucciones_2.png"
+                  alt="Instrucciones 2"
+                />
+              </div>
+              <div class="instructions-slide">
+                <img
+                  class="instructions-art"
+                  src="/Images/Instrucciones_3.png"
+                  alt="Instrucciones 3"
+                />
+              </div>
+            </div>
+          </div>
+          <button
+            id="continueBtn"
+            class="image-button instructions-ack-button is-disabled"
+            type="button"
+            aria-disabled="true"
+          >
+            <img src="/Images/Entendido.png" alt="Entendido" />
+          </button>
+        </div>
+      </div>
+
+      <div id="waitingScreen" class="fullscreen-screen hidden image-screen-shell">
+        <div class="image-screen waiting-artboard">
+          <img
+            class="screen-art"
+            src="/Images/Marco Burberry SDE.png"
+            alt="Sala de espera"
+          />
+          <video
+            id="waitingVideo"
+            class="waiting-video"
+            src="/Images/Video_SDE_web.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            webkit-playsinline="true"
+            preload="auto"
+          ></video>
+          <img class="waiting-logo" src="/Images/Burberry.png" alt="Burberry" />
+          <img class="waiting-title" src="/Images/Sala de espera.png" alt="Sala de espera" />
+          <button id="startExperienceBtn" class="image-button waiting-start-button" type="button">
+            <img src="/Images/Btn_Comenzar.png" alt="Comenzar" />
+          </button>
+        </div>
+      </div>
+
+      <div id="placementGuide" class="placement-guide hidden">
+        <div class="placement-card">
+          <p class="eyebrow">Paso 1</p>
+          <h2>Coloca el juego en una superficie</h2>
+          <p id="placementCopy">
+            Apunta tu cámara a una superficie plana, espera a que aparezca el marcador blanco y toca el botón <strong>+</strong>.
+          </p>
+          <p id="statusText" class="status">Busca una superficie y coloca la escena.</p>
+        </div>
+      </div>
+
+      <div id="hud" class="hidden">
+        <div class="chip">Monedas: <strong id="score">0</strong></div>
+        <div class="chip">Tiempo: <strong id="time">60</strong></div>
+      </div>
+
+      <div id="quizScreen" class="quiz-overlay hidden">
+        <div class="quiz-modal">
+          <img class="quiz-brand" src="/Images/Burberry.png" alt="Burberry" />
+
+          <div class="quiz-card-shell">
+            <img
+              class="quiz-card-bg"
+              src="/Images/Fondo_Pregunta.png"
+              alt=""
+              aria-hidden="true"
+            />
+            <h2 id="quizQuestion" class="quiz-question-copy">Pregunta</h2>
+            <div id="quizOptions" class="quiz-options"></div>
+            <p id="quizFeedback" class="status quiz-feedback hidden"></p>
+          </div>
+        </div>
+      </div>
+
+      <div id="debugPanel" class="debug-panel hidden">
+        <p class="eyebrow">Debug</p>
+        <p id="debugText" class="debug-text">Esperando eventos...</p>
+        <div class="debug-actions">
+          <button id="debugHideBtn" type="button">Ocultar todo</button>
+          <button id="debugSpawnBtn" type="button">Spawn prueba</button>
+        </div>
+      </div>
+
+      <div id="joystick" class="hidden">
+        <div id="joyBase"><div id="joyKnob"></div></div>
+      </div>
+
+      <div id="end" class="fullscreen-screen hidden image-screen-shell">
+        <div class="image-screen end-artboard">
+          <img
+            class="screen-art"
+            src="/Images/Despedida.png"
+            alt="Pantalla de despedida"
+          />
+          <button id="restartBtn" class="image-button end-finish-button" type="button">
+            <img src="/Images/Btn_Finalizar.png" alt="Finalizar" />
+          </button>
+          <h2 id="endTitle" class="hidden">Puntaje: 0</h2>
+          <p id="endPlayerId" class="hidden"></p>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.onirix.com/ox-devicemotion.min.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
